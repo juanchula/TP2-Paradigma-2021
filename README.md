@@ -19,6 +19,10 @@ https://es.wikipedia.org/wiki/An%C3%A1lisis_t%C3%A9cnico#Osciladores
 https://www.cryptomkt.com/platform/simple?country=AR
 https://www.ionos.es/digitalguide/paginas-web/desarrollo-web/que-es-websocket/
 
+#### Libro
+
+https://files.pharo.org/books-pdfs/entreprise-pharo/2016-10-06-EnterprisePharo.pdf
+
 #### API
 
 https://www.coinapi.io/
@@ -28,5 +32,6 @@ https://es.cryptonator.com/api/
 #### Repositorios
 
 https://github.com/svenvc/zinc
+https://github.com/pharo-contributions/Scheduler
 
 
