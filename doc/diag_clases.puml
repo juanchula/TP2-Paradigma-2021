@@ -1,0 +1,45 @@
+Diagrama de clases del Servidor
+
+@startuml Server
+
+hide circle
+skinparam ClassAttributeIconSize 0
+
+class ClienteHTTP {
+    - TaskScheduler scheduler 
+    - ZnClient cliente_http_eth 
+    - Integer periodo
+
+    + initialize()
+    + Dictionary doGetRequest(ZnClient aClientHTTP)
+    + comenzarScheduler()
+    + detenerScheduler()
+    + setFunctionScheduler()
+}
+
+class WebSocket {
+
+}
+
+
+'class Cliente{
+'    - socket sock_client
+'    - String ip_addr
+'    - int port
+
+'    + run()
+'    + crear_socket_client(String ip_addr, int port): socket
+'    + enviar_mediciones(socket sock, Dict msj)
+'}
+
+
+
+'class Thread
+'class Semaphore
+'Thread <|-- Cliente
+'Semaphore "2" - "1" Cliente : sem_cliente \nsock_ocupado
+'Semaphore "2" -- "1" Main_c : sem_cliente \nsock_ocupado
+'Cliente <.. Main_c
+'Main_c ..> Base_de_datos
+
+@enduml

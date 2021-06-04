@@ -1,0 +1,64 @@
+web socket servidor:
+
+ZnServer stopDefault.
+ZnServer startDefaultOn: 1701.
+ZnServer default logToTranscript.
+ZnServer default delegate: (ZnWebSocketDelegate handler:
+[ :webSocket |
+[ webSocket runWith: [ :message |
+webSocket sendMessage: message ]
+]
+on: ConnectionClosed
+do: [ self crLog: 'Ignoring connection close, done' ] ]).
+
+--------------------------------------------------------------
+
+web socket cliente:
+
+| webSocket |
+webSocket := ZnWebSocket to: 'ws://localhost:1701'.
+[ webSocket
+sendMessage: 'hola hola!';
+readMessage ] ensure: [ webSocket close ].
+
+--------------------------------------------------------------
+
+envio msj entre server y client:
+1)Server:
+
+ZnServer stopDefault.
+ZnServer startDefaultOn: 1701.
+ZnServer default delegate: (ZnWebSocketDelegate handler:
+[ :webSocket |
+[ | message |
+webSocket sendMessage: 'hola soy el servidor'.
+message := webSocket readMessage.
+"message printOn: Transcript ."
+message displayStringOn: Transcript.
+Transcript flush.] repeat ]).
+
+- o -
+
+ZnServer stopDefault.
+ZnServer startDefaultOn: 1701.
+ZnServer default delegate: (ZnWebSocketDelegate handler:
+[ :webSocket |
+[ | message |
+webSocket sendMessage: 'hola soy el servidor'. 
+message := webSocket readMessage.
+"message printOn: Transcript ."
+message displayStringOn: Transcript.
+Transcript flush.] on: ZnWebSocketClosed do: [ self crLog: 'Ignoring connection close, done' ] ]).
+
+2)Client:
+
+| webSocket msj |
+webSocket := ZnWebSocket to: 'ws://localhost:1701'.
+[ msj := webSocket readMessage .
+"hace algo con el msj recibido"
+msj displayStringOn: Transcript.
+Transcript flush.
+webSocket sendMessage: 'hola soy el cliente'.
+] ensure: [ webSocket close ].
+
+

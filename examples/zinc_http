@@ -1,3 +1,42 @@
+cliente HTTP:
+
+| ret json_ret |
+
+ret := ZnClient new 
+	url: 'https://api.cryptomkt.com/v1/ticker?market=ETHARS';
+	get;
+	response. 
+json_ret := ret entity string.
+ret isSuccess .
+ret writeOn: Transcript.
+Transcript flush.
+
+-------------------------------------------------------------
+
+| scheduler  cliente_http |
+"Start a new task scheduler and keep it around"
+scheduler := TaskScheduler new.
+
+cliente_http :=  ZnClient new url: 'https://api.cryptomkt.com/v1/ticker?market=ETHARS'.
+
+"scheduler start."
+"Let's save the image every hour"
+scheduler
+    do: [
+	| respuesta json |
+	respuesta := cliente_http get;
+					response.
+	json := respuesta entity string. 
+"cliente_http  isSuccess ."
+json writeOn: Transcript.
+Transcript flush. ]
+    every: 3 seconds.
+
+scheduler start.
+scheduler stop.
+
+-------------------------------------------------------------
+
 | scheduler  cliente_http cliente_http_ethars |
 "se crea un scheduler que ejecuta un GET cada 30 segundos"
 scheduler := TaskScheduler new.

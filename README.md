@@ -6,32 +6,38 @@ La cotización deberá actualizarse minuto a minuto por medio de una página rea
 Estos últimos son valores matemáticos calculados sobre las cotizaciones de cada cripto.
 Para ello deberá utilizar el paquete **Zinc (Zinc HTTP)** y **WebSocket** que estan desarrollados en el libro **"Enterprise Pharo - a Web Perspective"** de D.Cassou et.al disponible libremente en la página de documentacion de Pharo 
 ( https://books.pharo.org/ )
-Además deberá usar patrones de diseño: **Singleton** para el servidor, **Publisher / Suscriber**, para la actualizacion de las cotizaciones y **Strategy** para las sugerencias de compra/ventas
+Además deberá usar patrones de diseño: **Singleton** para el servidor, **Publisher / Suscriber**, para la actualizacion de las cotizaciones y **Strategy** para las sugerencias de compra/ventas.
 
 ## Links
 
 #### Teórico
 
-https://es.wikipedia.org/wiki/%C3%8Dndice_de_fuerza_relativa
-https://economipedia.com/definiciones/como-se-calcula-el-rsi-ejemplo.html
-https://es.wikipedia.org/wiki/Momentum_(an%C3%A1lisis_t%C3%A9cnico)
-https://es.wikipedia.org/wiki/An%C3%A1lisis_t%C3%A9cnico#Osciladores
-https://www.cryptomkt.com/platform/simple?country=AR
-https://www.ionos.es/digitalguide/paginas-web/desarrollo-web/que-es-websocket/
+ * https://es.wikipedia.org/wiki/%C3%8Dndice_de_fuerza_relativa
+ * https://economipedia.com/definiciones/como-se-calcula-el-rsi-ejemplo.html
+ * https://es.wikipedia.org/wiki/Momentum_(an%C3%A1lisis_t%C3%A9cnico)
+ * https://es.wikipedia.org/wiki/An%C3%A1lisis_t%C3%A9cnico#Osciladores
+ * https://www.cryptomkt.com/platform/simple?country=AR
+ * https://www.ionos.es/digitalguide/paginas-web/desarrollo-web/que-es-websocket/
+ 
+#### Patrones de diseño
+
+ * **Singleton:** https://refactoring.guru/es/design-patterns/singleton
+ * **Strategy:** https://refactoring.guru/es/design-patterns/strategy
+ * **Observer:** https://refactoring.guru/es/design-patterns/observer
 
 #### Libro
 
-https://files.pharo.org/books-pdfs/entreprise-pharo/2016-10-06-EnterprisePharo.pdf
+ * https://files.pharo.org/books-pdfs/entreprise-pharo/2016-10-06-EnterprisePharo.pdf
 
 #### API
 
-https://www.coinapi.io/
-https://developers.cryptomkt.com/es/#ticker
-https://es.cryptonator.com/api/
+ * https://www.coinapi.io/
+ * https://developers.cryptomkt.com/es/#ticker
+ * https://es.cryptonator.com/api/
 
 #### Repositorios
 
-https://github.com/svenvc/zinc
-https://github.com/pharo-contributions/Scheduler
+ * https://github.com/svenvc/zinc
+ * https://github.com/pharo-contributions/Scheduler
 
 
