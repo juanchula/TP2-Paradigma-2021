@@ -1,0 +1,55 @@
+Opcion 1:
+|websocketprueba|
+websocketprueba := WebSocketServer new.
+ZnServer startDefaultOn: 8080.
+ZnServer default delegate map: #image to: websocketprueba. 
+
+----------------------------------------------------------------
+
+Opcion 2:
+|webs|
+webs := WebSocketServer new.
+
+ZnServer stopDefault.
+
+ZnServer startDefaultOn: 1701.
+
+ZnServer default logToTranscript.
+
+ZnServer default delegate
+
+map: 'ws-status-client'
+
+to: [ :request | ZnResponse ok: (ZnEntity html:
+
+webs data) ];
+
+map: 'ws-status'
+
+to: (ZnWebSocketDelegate map: 'ws-status' to:
+
+ZnWebSocketStatusHandler new).
+
+2 second asDelay wait.
+
+----------------------------------------------------------------
+
+HTML AUTOF5:
+'<html>
+   <head>
+      
+      <script type = "text/JavaScript">
+         <!--
+            function AutoRefresh( t ) {
+               setTimeout("location.reload(true);", t);
+            }
+         //-->
+      </script>
+      
+   </head>
+   
+   <body onload = "JavaScript:AutoRefresh(1000);">
+      <p>This page will refresh every 2 seconds.</p>
+   </body>
+   
+</html>'
