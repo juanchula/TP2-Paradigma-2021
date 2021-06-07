@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="description" content="Aquí puedes encontrar las últimas cotizaciones de las criptomonedas más populares del mercado, junto a algunos consejos de compra.">
+  <title>Cotizaciones Crypto Server</title>
+</head>
+
+
+<body>
+  <h1>Cotizaciones Crypto Server en tiempo real</h1>
+  <pre id="data"></pre>
+
+  <script language="javascript" type="text/javascript">
+      var wsUri = "ws://" + location.host + "/ws-crypto-server";
+      var exampleSocket = new WebSocket(wsUri);
+      exampleSocket.onmessage = function(event) {
+      console.log(event.data)
+      var el = document.body.querySelector("#data");
+      if(el){
+        el.textContent = event.data;
+      }
+        
+      }
+  </script>
+
+</body>
+</html>

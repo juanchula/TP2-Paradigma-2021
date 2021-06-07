@@ -1,0 +1,13 @@
+ZnServer stopDefault.
+(ZnServer defaultOn: 1701)
+   bindingAddress: #[127 0 0 1];
+   logToTranscript;
+   start.
+ZnServer default logToTranscript.
+ZnServer default delegate
+map: 'crypto-servers'
+to: [ :request | ZnResponse ok: (ZnEntity html:
+ wss html) ];
+map: 'ws-crypto-server'
+to: (ZnWebSocketDelegate map: 'ws-crypto-server' to:
+wss).
