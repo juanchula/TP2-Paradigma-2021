@@ -1,0 +1,33 @@
+|wss cliente_http_ethars respuesta json json_dict dict server gestorEventos cliente_http |
+
+server := ServidorHTTP new.
+"server stopServidor ."
+
+
+cliente_http_ethars :=  ZnClient new url: 'https://api.cryptomkt.com/v1/ticker?market=BTCARS'.
+
+"ejecuta una request http cada 30 seg periodicamente"
+		"response de la consulta http"
+	respuesta := cliente_http_ethars get;
+					response.
+		"string del body de la response"
+	json := respuesta entity string. 
+	"se convierte el string devuelto en un diccionario con todos los valores de la cripto"
+json_dict := NeoJSONReader fromString: json.
+dict := json_dict at:'data' at:1.
+json := NeoJSONWriter toString: dict.
+
+server webSocket data: json.
+
+"server webSocket: wss."
+server startServidor .
+
+7 second asDelay wait.
+
+cliente_http := ClienteHTTP new.
+gestorEventos := cliente_http eventManager.
+gestorEventos subscribe: server webSocket.
+cliente_http comenzarScheduler .
+cliente_http detenerScheduler .
+Transcript show: server webSocket data.
+Transcript flush.
