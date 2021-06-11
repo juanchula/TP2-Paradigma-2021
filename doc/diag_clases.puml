@@ -2,7 +2,7 @@ Diagrama de clases del Servidor
 
 @startuml Server
 
-hide circle
+'hide circle
 skinparam ClassAttributeIconSize 0
 
 class ClienteHTTP {
@@ -21,6 +21,24 @@ class WebSocket {
 
 }
 
+interface Indicador {
+
+    + calcularMetrica(JSON valoresMercado)
+}
+
+class IndicadorRSI {
+
+    + calcularMetrica(JSON valoresMercado)
+}
+
+class IndicadorMomentum {
+
+    + calcularMetrica(JSON valoresMercado)
+}
+
+WebSocket o.> Indicador
+Indicador <|.. IndicadorRSI
+Indicador <|.. IndicadorMomentum
 
 'class Cliente{
 '    - socket sock_client

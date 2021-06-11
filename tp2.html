@@ -8,7 +8,9 @@
 
 <body>
   <h1><u>Cotizaciones <i>Crypto Server</i> en tiempo real</u></h1>
-  <h2>Bitcoin (BTC)</h2>
+  <div id="tituloBTC" style="padding:10px; width: 99%; line-height:0.1;">
+    <h2>Bitcoin (BTC)</h2>
+  </div>
   <ul>
     <li><b>Timestamp:</b></li><p id="timestamp_btc"></p>
     <li><b>Market:</b></li><p id="market_btc"></p>
@@ -20,7 +22,9 @@
     <li><b>Volume:</b></li><p id="volume_btc"></p>
   </ul>
 
-  <h2>Ether (ETH)</h2>
+  <div id="tituloETH" style="padding:10px; width: 99%; line-height:0.1;">
+    <h2>Ether (ETH)</h2>
+  </div>
   <ul>
     <li><b>Timestamp:</b></li><p id="timestamp_eth"></p>
     <li><b>Market:</b></li><p id="market_eth"></p>
@@ -33,6 +37,9 @@
   </ul>
 
   <script language="javascript" type="text/javascript">
+      const ROJO = "#FC3232";
+      const VERDE = "#5BCA57";
+      const GRIS = "#D6D6D6";
       var wsUri = "ws://" + location.host + "/ws-crypto-server";
       var exampleSocket = new WebSocket(wsUri);
       var ret;
@@ -42,6 +49,7 @@
 
         if(ret != "{}"){
           var jsonRet = JSON.parse(ret);
+          var accion;
 
           //para Bitcoin
           document.getElementById("timestamp_btc").innerHTML = jsonRet.bitcoin.timestamp;
@@ -62,7 +70,23 @@
           document.getElementById("low_eth").innerHTML = jsonRet.ethereum.low;
           document.getElementById("high_eth").innerHTML = jsonRet.ethereum.high;
           document.getElementById("volume_eth").innerHTML = jsonRet.ethereum.volume;
+
+          
         }
+        setColorFondo("hola", "tituloBTC");
+      }
+
+      function setColorFondo(accion, titulo){
+        switch(accion){
+            case "comprar":
+              document.getElementById(titulo).style.backgroundColor = VERDE;
+              break;
+            case "vender":
+              document.getElementById(titulo).style.backgroundColor = ROJO;
+              break;
+            default:
+              document.getElementById(titulo).style.backgroundColor = GRIS;
+          }
       }
   </script>
 
