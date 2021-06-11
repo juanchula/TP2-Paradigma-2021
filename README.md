@@ -18,6 +18,7 @@ Además deberá usar patrones de diseño: **Singleton** para el servidor, **Publ
  * https://es.wikipedia.org/wiki/An%C3%A1lisis_t%C3%A9cnico#Osciladores
  * https://www.cryptomkt.com/platform/simple?country=AR
  * https://www.ionos.es/digitalguide/paginas-web/desarrollo-web/que-es-websocket/
+ * https://guiadetrading.com/indicadores-criptomonedas/
  
 #### Patrones de diseño
 

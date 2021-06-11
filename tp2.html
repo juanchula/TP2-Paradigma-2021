@@ -21,6 +21,10 @@
     <li><b>High:</b></li><p id="high_btc"></p>
     <li><b>Volume:</b></li><p id="volume_btc"></p>
   </ul>
+  <select name="indicadorBTC" id="indicadorBTC" onchange="selectEstrategia(this)">
+    <option value="rsi-btc">RSI</option>
+    <option value="momentum-btc">Momentum</option>
+  </select>
 
   <div id="tituloETH" style="padding:10px; width: 99%; line-height:0.1;">
     <h2>Ether (ETH)</h2>
@@ -35,6 +39,10 @@
     <li><b>High:</b></li><p id="high_eth"></p>
     <li><b>Volume:</b></li><p id="volume_eth"></p>
   </ul>
+  <select name="indicadorETH" id="indicadorETH" onchange="selectEstrategia(this)">
+    <option value="rsi-eth">RSI</option>
+    <option value="momentum-eth">Momentum</option>
+  </select>
 
   <script language="javascript" type="text/javascript">
       const ROJO = "#FC3232";
@@ -43,6 +51,8 @@
       var wsUri = "ws://" + location.host + "/ws-crypto-server";
       var exampleSocket = new WebSocket(wsUri);
       var ret;
+      var metricas = {"btc" : "rsi", "eth" : "rsi"};
+      
       exampleSocket.onmessage = function(event) {
         console.log(event.data);
         ret = event.data;
@@ -73,7 +83,9 @@
 
           
         }
-        setColorFondo("hola", "tituloBTC");
+        exampleSocket.send(JSON.stringify(metricas));
+        console.log(JSON.stringify(metricas));
+        //setColorFondo("hola", "tituloBTC");
       }
 
       function setColorFondo(accion, titulo){
@@ -88,6 +100,14 @@
               document.getElementById(titulo).style.backgroundColor = GRIS;
           }
       }
+
+      function selectEstrategia(estrategia){
+        console.log(estrategia.value);
+        var strategy = estrategia.value;
+        var estrategia_cripto = strategy.split("-");
+        metricas[estrategia_cripto[1]] = estrategia_cripto[0];
+      }
+
   </script>
 
 </body>
