@@ -6,45 +6,63 @@
   <title>Cotizaciones Crypto Server</title>
 </head>
 
-
 <body>
   <h1><u>Cotizaciones <i>Crypto Server</i> en tiempo real</u></h1>
   <h2>Bitcoin (BTC)</h2>
   <ul>
-    <li><b>Timestamp:</b></li>
-    <li><b>Market:</b></li>
-    <li><b>Bid:</b></li>
-    <li><b>Ask:</b></li>
-    <li><b>Last price:</b></li>
-    <li><b>Low:</b></li>
-    <li><b>High:</b></li>
-    <li><b>Volume:</b></li>
+    <li><b>Timestamp:</b></li><p id="timestamp_btc"></p>
+    <li><b>Market:</b></li><p id="market_btc"></p>
+    <li><b>Bid:</b></li><p id="bid_btc"></p>
+    <li><b>Ask:</b></li><p id="ask_btc"></p>
+    <li><b>Last price:</b></li><p id="last_price_btc"></p>
+    <li><b>Low:</b></li><p id="low_btc"></p>
+    <li><b>High:</b></li><p id="high_btc"></p>
+    <li><b>Volume:</b></li><p id="volume_btc"></p>
   </ul>
 
   <h2>Ether (ETH)</h2>
   <ul>
-    <li><b>Timestamp:</b></li>
-    <li><b>Market:</b></li>
-    <li><b>Bid:</b></li>
-    <li><b>Ask:</b></li>
-    <li><b>Last price:</b></li>
-    <li><b>Low:</b></li>
-    <li><b>High:</b></li>
-    <li><b>Volume:</b></li>
+    <li><b>Timestamp:</b></li><p id="timestamp_eth"></p>
+    <li><b>Market:</b></li><p id="market_eth"></p>
+    <li><b>Bid:</b></li><p id="bid_eth"></p>
+    <li><b>Ask:</b></li><p id="ask_eth"></p>
+    <li><b>Last price:</b></li><p id="last_price_eth"></p>
+    <li><b>Low:</b></li><p id="low_eth"></p>
+    <li><b>High:</b></li><p id="high_eth"></p>
+    <li><b>Volume:</b></li><p id="volume_eth"></p>
   </ul>
-
-  <pre id="data"></pre>
 
   <script language="javascript" type="text/javascript">
       var wsUri = "ws://" + location.host + "/ws-crypto-server";
       var exampleSocket = new WebSocket(wsUri);
+      var ret;
       exampleSocket.onmessage = function(event) {
-      console.log(event.data)
-      var el = document.body.querySelector("#data");
-      if(el){
-        el.textContent = event.data;
-      }
-        
+        console.log(event.data);
+        ret = event.data;
+
+        if(ret != "{}"){
+          var jsonRet = JSON.parse(ret);
+
+          //para Bitcoin
+          document.getElementById("timestamp_btc").innerHTML = jsonRet.bitcoin.timestamp;
+          document.getElementById("market_btc").innerHTML = jsonRet.bitcoin.market;
+          document.getElementById("bid_btc").innerHTML = jsonRet.bitcoin.bid;
+          document.getElementById("ask_btc").innerHTML = jsonRet.bitcoin.ask;
+          document.getElementById("last_price_btc").innerHTML = jsonRet.bitcoin.last_price;
+          document.getElementById("low_btc").innerHTML = jsonRet.bitcoin.low;
+          document.getElementById("high_btc").innerHTML = jsonRet.bitcoin.high;
+          document.getElementById("volume_btc").innerHTML = jsonRet.bitcoin.volume;
+
+          //para Ethereum
+          document.getElementById("timestamp_eth").innerHTML = jsonRet.ethereum.timestamp;
+          document.getElementById("market_eth").innerHTML = jsonRet.ethereum.market;
+          document.getElementById("bid_eth").innerHTML = jsonRet.ethereum.bid;
+          document.getElementById("ask_eth").innerHTML = jsonRet.ethereum.ask;
+          document.getElementById("last_price_eth").innerHTML = jsonRet.ethereum.last_price;
+          document.getElementById("low_eth").innerHTML = jsonRet.ethereum.low;
+          document.getElementById("high_eth").innerHTML = jsonRet.ethereum.high;
+          document.getElementById("volume_eth").innerHTML = jsonRet.ethereum.volume;
+        }
       }
   </script>
 

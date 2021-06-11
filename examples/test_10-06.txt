@@ -1,0 +1,30 @@
+|wss cliente_http_ethars respuesta json json_dict dict server gestorEventos cliente_http ret|
+
+server := ServidorHTTP new.
+"server stopServidor ."
+
+"server webSocket: wss."
+server startServidor .
+3 second asDelay wait.
+cliente_http := ClienteHTTP new.
+"cliente_http setFuncionScheduler ."
+
+gestorEventos := cliente_http eventManager.
+gestorEventos subscribe: server webSocket.
+ret := cliente_http doGetRequest: (cliente_http cliente_http_eth).
+"cliente_http comenzarScheduler ."
+5 second asDelay wait.
+"cliente_http detenerScheduler ."
+gestorEventos notify: ret.
+Transcript show: server webSocket data.
+Transcript flush.
+
+cliente_http := ClienteHTTP new.
+"cliente_http comenzarScheduler ."
+cliente_http setFuncionScheduler .
+cliente_http comenzarScheduler .
+Transcript flush.
+5 second asDelay wait.
+cliente_http detenerScheduler .
+Transcript show: 'fin'.
+Transcript flush.
