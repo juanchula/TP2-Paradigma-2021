@@ -54,6 +54,7 @@
       var metricas = {"btc" : "rsi", "eth" : "rsi"};
       
       exampleSocket.onmessage = function(event) {
+        exampleSocket.send(JSON.stringify(metricas));
         console.log(event.data);
         ret = event.data;
 
@@ -81,11 +82,11 @@
           document.getElementById("high_eth").innerHTML = jsonRet.ethereum.high;
           document.getElementById("volume_eth").innerHTML = jsonRet.ethereum.volume;
 
-          
         }
-        exampleSocket.send(JSON.stringify(metricas));
+        
         console.log(JSON.stringify(metricas));
-        //setColorFondo("hola", "tituloBTC");
+        setColorFondo(jsonRet.bitcoin.criterio, "tituloBTC");
+        setColorFondo(jsonRet.ethereum.criterio, "tituloETH");
       }
 
       function setColorFondo(accion, titulo){
