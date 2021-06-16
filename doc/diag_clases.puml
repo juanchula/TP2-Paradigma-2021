@@ -1,63 +1,125 @@
-Diagrama de clases del Servidor
+Diagrama de clases del TP2 - CryptoServer
 
-@startuml Server
+@startuml CryptoServer
 
 'hide circle
 skinparam ClassAttributeIconSize 0
 
 class ClienteHTTP {
-    - TaskScheduler scheduler 
+    - {static} TaskScheduler scheduler 
+    - ZnClient cliente_http_btc
     - ZnClient cliente_http_eth 
     - Integer periodo
+    - OrderedCollection valoresBTC
+    - OrderedCollection valoresETH
+    - GestorDeEventos eventManager
 
     + initialize()
-    + Dictionary doGetRequest(ZnClient aClientHTTP)
+    + doGetRequest(ZnClient aClientHTTP) : Dictionary
     + comenzarScheduler()
     + detenerScheduler()
     + setFunctionScheduler()
+    + {static} scheduler() : TaskScheduler
+    + {static} scheduler(TaskScheduler obj) 
+    '+ cliente_http_btc() : ZnClient
+    '+ cliente_http_btc(ZnClient obj)
+    '+ cliente_http_eth() : ZnClient 
+    '+ cliente_http_eth(ZnClient obj)
+    '+ eventManager() : GestorDeEventos 
+    '+ eventManager(GestorDeEventos obj)
+    '+ periodo() : Integer
+    '+ periodo(Integer obj)
+    '+ valoresBTC() : OrderedCollection
+    '+ valoresBTC(OrderedCollection obj)
+    '+ valoresETH() : OrderedCollection
+    '+ valoresETH(OrderedCollection obj)
+
 }
 
-class WebSocket {
+class Application {
+    - ServidorHTTP server 
+    - ClienteHTPP cliete_http 
 
+    + initialize()
+    + main()
+    '+ server() : ServidorHTTP
+    '+ server(ServidorHTTP anObject)
+}
+
+class GestorDeEventos {
+    - OrderedCollection listeners 
+
+    + initialize()
+    '+ listeners() : OrderedCollection
+    '+ listeners(OrderedCollection anObject)
+    + notify(Dictionary aData)
+    + subscribe(Object aListener)
+    + unsubscribe(Object aListener)
 }
 
 interface Indicador {
 
-    + calcularMetrica(JSON valoresMercado)
+    + calcularMetrica(Dictionary valoresMercado) : String
 }
 
 class IndicadorRSI {
 
-    + calcularMetrica(JSON valoresMercado)
+    + calcularMetrica(Dictionary valoresMercado) : String
 }
 
 class IndicadorMomentum {
 
-    + calcularMetrica(JSON valoresMercado)
+    + calcularMetrica(Dictionary valoresMercado) : String
 }
 
-WebSocket o.> Indicador
+class ServidorHTTP {
+    - Array ipAddr 
+    - Integer nroPuerto 
+    - WebSocketServer webSocket 
+    - String html
+
+    + initialize()
+    + startServidor()
+    + stopServidor()
+    '+ ipAddr() : Array
+    '+ ipAddr(Array obj)
+    '+ nroPuerto() : Integer 
+    '+ nroPuerto(Integer obj) 
+    '+ webSocket() : WebSocketServer 
+    '+ webSocket(WebSocketServer obj)
+    '+ html() : String
+    '+ html(String obj)
+}
+
+class WebSocketServer {
+    - data
+    - indicadorCVBTC
+    - indicadorCVETH
+    - datasimple
+
+    + initialize()
+    '+ data() : JSON data
+    '+ data(JSON anObject)
+    '+ datasimple() : Dictionary
+    '+ datasimple(Dictionary anObject)
+    + indicadorCVBTC() : Indicador
+    + indicadorCVETH() : Indicador
+    + selectMomentumBTC()
+    + selectMomentumETH()
+    + selectRSIBTC()
+    + selectRSIETH()
+    + update(Dictionary aData)
+    + value(ZnWebSocket webSocket) 
+}
+
+WebSocketServer o.> Indicador
 Indicador <|.. IndicadorRSI
 Indicador <|.. IndicadorMomentum
 
-'class Cliente{
-'    - socket sock_client
-'    - String ip_addr
-'    - int port
-
-'    + run()
-'    + crear_socket_client(String ip_addr, int port): socket
-'    + enviar_mediciones(socket sock, Dict msj)
-'}
-
-
-
-'class Thread
-'class Semaphore
-'Thread <|-- Cliente
-'Semaphore "2" - "1" Cliente : sem_cliente \nsock_ocupado
-'Semaphore "2" -- "1" Main_c : sem_cliente \nsock_ocupado
-'Cliente <.. Main_c
-'Main_c ..> Base_de_datos
+Application ..> ClienteHTTP
+Application ..> ServidorHTTP
+ServidorHTTP ..> WebSocketServer
+ClienteHTTP o.> GestorDeEventos
+GestorDeEventos o--> WebSocketServer
 
 @enduml
