@@ -38,7 +38,7 @@ class ClienteHTTP {
 
 class Application {
     - ServidorHTTP server 
-    - ClienteHTPP cliete_http 
+    - ClienteHTTP cliente_http 
 
     + initialize()
     + main()
